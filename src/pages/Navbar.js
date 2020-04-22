@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Navbar = () => {
+const Navbar = ({ createBootcamp }) => {
   return (
     <nav>
       <div className="nav-wrapper">
@@ -8,7 +8,7 @@ const Navbar = () => {
           <i className="material-icons"></i>Bootcamper
         </a>
         <ul className="right hide-on-med-and-down">
-          <li>
+          {/* <li>
             <a href="#!">
               <i className="material-icons">search</i>
             </a>
@@ -17,7 +17,17 @@ const Navbar = () => {
             <a href="#!">
               <i className="material-icons">more_vert</i>
             </a>
-          </li>
+          </li> */}
+          {createBootcamp && (
+            <li>
+              <a
+                className="waves-effect waves-light btn modal-trigger"
+                href="#createBootcamp"
+              >
+                Create New Bootcamp
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

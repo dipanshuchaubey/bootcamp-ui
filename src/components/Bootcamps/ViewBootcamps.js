@@ -3,6 +3,8 @@ import Navbar from '../../pages/Navbar';
 import Footer from '../../pages/Footer';
 import M from 'materialize-css';
 import axios from 'axios';
+import CreateBootcampModal from './CreateBootcampModal';
+import ViewBootcampDetails from './ViewBootcampDetails';
 
 const ViewBootcamps = () => {
   useEffect(() => {
@@ -12,6 +14,7 @@ const ViewBootcamps = () => {
 
   const [bootcamps, setBootcamps] = useState([]);
   const [error, setError] = useState('');
+  const [selected, setSelected] = useState('');
 
   const getData = () => {
     axios
@@ -22,17 +25,16 @@ const ViewBootcamps = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar createBootcamp={true} />
 
       <div className="row">
         {bootcamps.map(bootcamp => {
-          console.log(bootcamp);
-
           return (
             <div className="col s3 m3" key={bootcamp.id}>
               <div className="card">
                 <div className="card-image">
                   <img
+                    draggable="false"
                     alt="bootcamp_thumbnail"
                     src="https://www.trilogyed.com/blog/wp-content/uploads/2018/05/columbia_coding_boot_camp2_brandon_colbert.jpg"
                   />
@@ -40,14 +42,66 @@ const ViewBootcamps = () => {
                 </div>
                 <div className="card-content">
                   <p>{bootcamp.description}</p>
+
+                  <br />
+                  <div>
+                    {bootcamp.careers.map((career, index) => {
+                      return (
+                        <span key={index} className="chip">
+                          {career}
+                        </span>
+                      );
+                    })}
+                  </div>
+
+                  <div style={{ marginTop: '10px', marginBottom: '30px' }}>
+                    <span
+                      className={`new badge red ${
+                        bootcamp.housing ? 'green' : 'red'
+                      } `}
+                      data-badge-caption="Housing"
+                    ></span>
+
+                    <span
+                      className={`new badge red ${
+                        bootcamp.jobAssistance ? 'green' : 'red'
+                      } `}
+                      data-badge-caption="Job Assistance"
+                    ></span>
+
+                    <span
+                      className={`new badge red ${
+                        bootcamp.jobGrarantee ? 'green' : 'red'
+                      } `}
+                      data-badge-caption="Job Grarantee"
+                    ></span>
+
+                    <span
+                      className={`new badge red ${
+                        bootcamp.acceptGi ? 'green' : 'red'
+                      } `}
+                      data-badge-caption="Scholarship"
+                    ></span>
+                  </div>
                 </div>
                 <div className="card-action">
-                  <a href="#!">This is a link</a>
+                  <a
+                    className="modal-trigger"
+                    href="#viewBootcampDetails"
+                    data-target="viewBootcampDetails"
+                    onClick={() => setSelected(bootcamp._id)}
+                  >
+                    View Details
+                  </a>
                 </div>
               </div>
             </div>
           );
         })}
+
+        <ViewBootcampDetails bootcamps={bootcamps} selected={selected} />
+
+        <CreateBootcampModal />
       </div>
 
       {/*  MODAL  */}
