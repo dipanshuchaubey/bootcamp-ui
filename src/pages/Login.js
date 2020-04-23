@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
+  const history = useHistory();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -15,9 +18,9 @@ const Login = () => {
         password
       })
       .then(data => {
-        console.log(data.data.token);
-
         localStorage.setItem('JWT_TOKEN', data.data.token);
+
+        history.push('/');
       })
       .catch(err => setError(err.response.data.error));
   };

@@ -14,7 +14,7 @@ const ViewBootcampDetails = ({ bootcamps, selected }) => {
 
             {bootcamp.courses.map(course => {
               return (
-                <div className="row">
+                <div className="row" key={course._id}>
                   <div className="col s6 m6">
                     <div className="card blue-grey darken-1">
                       <div className="card-content white-text">

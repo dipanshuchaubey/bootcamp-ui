@@ -3,6 +3,7 @@ import Navbar from '../../pages/Navbar';
 import Footer from '../../pages/Footer';
 import M from 'materialize-css';
 import axios from 'axios';
+import decode from 'jwt-decode';
 import CreateBootcampModal from './CreateBootcampModal';
 import ViewBootcampDetails from './ViewBootcampDetails';
 
@@ -11,6 +12,17 @@ const ViewBootcamps = () => {
     M.AutoInit();
     getData();
   }, []);
+
+  let role;
+  let user;
+
+  if (localStorage.getItem('JWT_TOKEN')) {
+    user = decode(localStorage.getItem('JWT_TOKEN'));
+
+    if (user) {
+      role = user.role;
+    }
+  }
 
   const [bootcamps, setBootcamps] = useState([]);
   const [error, setError] = useState('');
@@ -25,9 +37,14 @@ const ViewBootcamps = () => {
 
   return (
     <div>
-      <Navbar createBootcamp={true} />
+      <Navbar
+        createBootcamp={['publisher', 'admin'].includes(role) ? true : false}
+        user={user}
+      />
 
       <div className="row">
+        {error && <p className="red-text center-align">{error}</p>}
+
         {bootcamps.map(bootcamp => {
           return (
             <div className="col s3 m3" key={bootcamp.id}>

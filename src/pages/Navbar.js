@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Navbar = ({ createBootcamp }) => {
+const Navbar = ({ createBootcamp, user }) => {
   return (
     <nav>
       <div className="nav-wrapper">
@@ -8,16 +9,6 @@ const Navbar = ({ createBootcamp }) => {
           <i className="material-icons"></i>Bootcamper
         </a>
         <ul className="right hide-on-med-and-down">
-          {/* <li>
-            <a href="#!">
-              <i className="material-icons">search</i>
-            </a>
-          </li>
-          <li>
-            <a href="#!">
-              <i className="material-icons">more_vert</i>
-            </a>
-          </li> */}
           {createBootcamp && (
             <li>
               <a
@@ -26,6 +17,16 @@ const Navbar = ({ createBootcamp }) => {
               >
                 Create New Bootcamp
               </a>
+            </li>
+          )}
+
+          {!user ? (
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          ) : (
+            <li onClick={() => localStorage.removeItem('JWT_TOKEN')}>
+              <Link to="/login">Logout</Link>
             </li>
           )}
         </ul>
