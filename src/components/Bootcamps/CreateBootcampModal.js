@@ -8,13 +8,6 @@ const CreateBootcampModal = () => {
   }, []);
 
   const [bootcamp, setBootcamp] = useState({
-    name: null,
-    website: null,
-    decription: null,
-    phone: null,
-    email: null,
-    address: null,
-    housing: false,
     jobAssistance: false,
     jobGuarantee: false,
     acceptGi: false

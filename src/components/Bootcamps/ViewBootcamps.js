@@ -25,6 +25,7 @@ const ViewBootcamps = () => {
   }
 
   const [bootcamps, setBootcamps] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [error, setError] = useState('');
   const [selected, setSelected] = useState('');
 
@@ -33,6 +34,13 @@ const ViewBootcamps = () => {
       .get('https://bootcamper.ml/api/v1/bootcamps')
       .then(data => setBootcamps(data.data.data))
       .catch(err => setError(err.response.data.error));
+  };
+
+  const getReviews = id => {
+    axios
+      .get(`https://bootcamper.ml/api/v1/bootcamps/${id}/reviews`)
+      .then(data => setReviews(data.data.data))
+      .catch(err => console.log(err));
   };
 
   return (
@@ -106,7 +114,10 @@ const ViewBootcamps = () => {
                     className="modal-trigger"
                     href="#viewBootcampDetails"
                     data-target="viewBootcampDetails"
-                    onClick={() => setSelected(bootcamp._id)}
+                    onClick={() => {
+                      setSelected(bootcamp._id);
+                      getReviews(bootcamp._id);
+                    }}
                   >
                     View Details
                   </a>
@@ -116,7 +127,11 @@ const ViewBootcamps = () => {
           );
         })}
 
-        <ViewBootcampDetails bootcamps={bootcamps} selected={selected} />
+        <ViewBootcampDetails
+          bootcamps={bootcamps}
+          selected={selected}
+          reviews={reviews}
+        />
 
         <CreateBootcampModal />
       </div>
