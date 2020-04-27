@@ -5,10 +5,6 @@ const ViewBootcampDetails = ({ bootcamps, selected, reviews }) => {
 
   const bootcamp = bootcamps[index];
 
-  // GET BOOTCAMP REVIEWS
-
-  console.log(reviews);
-
   return (
     <div>
       <div id="viewBootcampDetails" className="modal modal-fixed-footer">

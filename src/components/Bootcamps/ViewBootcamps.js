@@ -6,6 +6,8 @@ import axios from 'axios';
 import decode from 'jwt-decode';
 import CreateBootcampModal from './CreateBootcampModal';
 import ViewBootcampDetails from './ViewBootcampDetails';
+import AddCourseModal from './AddCourseModal';
+import ReviewBootcamp from './ReviewBootcamp';
 
 const ViewBootcamps = () => {
   useEffect(() => {
@@ -121,6 +123,30 @@ const ViewBootcamps = () => {
                   >
                     View Details
                   </a>
+                  {['publisher', 'admin'].includes(role) && (
+                    <a
+                      className="modal-trigger"
+                      href="#addCourseToBootcamp"
+                      data-target="addCourseToBootcamp"
+                      onClick={() => {
+                        setSelected(bootcamp._id);
+                      }}
+                    >
+                      Add Course
+                    </a>
+                  )}
+                  {role === 'user' && (
+                    <a
+                      className="modal-trigger"
+                      href="#addBootcampReview"
+                      data-target="addBootcampReview"
+                      onClick={() => {
+                        setSelected(bootcamp._id);
+                      }}
+                    >
+                      Review Bootcamp
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -133,7 +159,11 @@ const ViewBootcamps = () => {
           reviews={reviews}
         />
 
-        <CreateBootcampModal />
+        <AddCourseModal selected={selected} />
+
+        <ReviewBootcamp selected={selected} />
+
+        <CreateBootcampModal selected={selected} />
       </div>
 
       {/*  MODAL  */}
